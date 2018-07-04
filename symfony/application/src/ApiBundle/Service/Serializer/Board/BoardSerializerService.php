@@ -8,7 +8,6 @@
 
 namespace ApiBundle\Service\Serializer\Board;
 
-
 use ApiBundle\Entity\Board;
 use ApiBundle\Entity\BoardState;
 use ApiBundle\Entity\Game;
