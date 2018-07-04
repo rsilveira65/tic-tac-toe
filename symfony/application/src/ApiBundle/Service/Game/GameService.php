@@ -12,6 +12,8 @@ namespace ApiBundle\Service\Game;
 use ApiBundle\Entity\Board;
 use ApiBundle\Entity\BoardState;
 use ApiBundle\Entity\Game;
+use ApiBundle\Helper\GameMoveIndexHelper;
+use ApiBundle\Helper\GameStatusHelper;
 use Doctrine\ORM\EntityManager;
 
 class GameService
@@ -20,10 +22,6 @@ class GameService
     private $game;
     /** @var  Board $board */
     private $board;
-
-    const Y = 0;
-    const X = 1;
-    const PLAYER = 2;
 
     const NUMBER_OF_BOARD_STATES = 3;
 
@@ -63,7 +61,7 @@ class GameService
         $this->game = new Game();
         $this->game
             ->setBoard($this->createBoard())
-            ->setStatus(1)
+            ->setStatus(GameStatusHelper::ONGOING)
             ->setCreated($this->getEuropeDateTime())
             ->setModified($this->getEuropeDateTime());
 
@@ -122,14 +120,17 @@ class GameService
         }
     }
 
+    /**
+     * @param $parameters
+     */
     private function updateStateByMovement($parameters)
     {
         $move = $parameters['move'];
         $gameStates = $this->board->getBoardStates();
-        $setter = "setX{$move[self::X]}";
-        $gameState = $gameStates[$move[self::Y]];
+        $setter = "setX{$move[GameMoveIndexHelper::X]}";
+        $gameState = $gameStates[$move[GameMoveIndexHelper::Y]];
 
-        $gameState->{$setter}($move[self::PLAYER]);
+        $gameState->{$setter}($move[GameMoveIndexHelper::PLAYER]);
         $this->entityManager->persist($gameState);
         $this->entityManager->flush();
     }

@@ -12,6 +12,7 @@ namespace ApiBundle\Service\Serializer\Board;
 use ApiBundle\Entity\Board;
 use ApiBundle\Entity\BoardState;
 use ApiBundle\Entity\Game;
+use ApiBundle\Helper\GameStatusHelper;
 
 class BoardSerializerService
 {
@@ -25,7 +26,7 @@ class BoardSerializerService
             'board' => [],
             'message' => 'Board created/updated successfully!',
             'type' => 'success',
-            'status' => $game->getStatus() ? 'Ongoing' : 'Completed'
+            'status' => $game->getStatus() == GameStatusHelper::ONGOING ? 'Ongoing' : 'Completed'
         ];
 
         /** @var Board $board */

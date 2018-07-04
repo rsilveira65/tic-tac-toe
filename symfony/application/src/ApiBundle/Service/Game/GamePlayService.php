@@ -5,6 +5,8 @@ namespace ApiBundle\Service\Game;
 use ApiBundle\Entity\Board;
 use ApiBundle\Entity\BoardState;
 use ApiBundle\Entity\Game;
+use ApiBundle\Helper\GameMoveIndexHelper;
+use ApiBundle\Helper\GameStatusHelper;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -16,10 +18,6 @@ class GamePlayService implements GamePlayServiceInterface
 {
     /** @var  EntityManager $entityManager */
     private $entityManager;
-
-    const Y = 0;
-    const X = 1;
-    const PLAYER = 2;
 
     /**
      * GamePlayService constructor.
@@ -36,7 +34,7 @@ class GamePlayService implements GamePlayServiceInterface
      */
     public function makeMove(Game $game)
     {
-        $game->setStatus(2);
+        $game->setStatus(GameStatusHelper::COMPLETED);
 
         if (!$this->isGameCompleted($game)) {
             $emptyBoardStateIndexes = $this->getEmptyBoardStateIndexesByGame($game);
@@ -45,10 +43,10 @@ class GamePlayService implements GamePlayServiceInterface
 
             $boardStates = $game->getBoard()->getBoardStates();
 
-            $setter = "setX{$emptyBoardStateIndex[self::X]}";
-            $boardState = $boardStates[$emptyBoardStateIndex[self::Y]];
+            $setter = "setX{$emptyBoardStateIndex[GameMoveIndexHelper::X]}";
+            $boardState = $boardStates[$emptyBoardStateIndex[GameMoveIndexHelper::Y]];
 
-            $boardState->{$setter}($emptyBoardStateIndex[self::PLAYER]);
+            $boardState->{$setter}($emptyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
 
             $this->entityManager->persist($boardState);
         }
@@ -60,7 +58,7 @@ class GamePlayService implements GamePlayServiceInterface
     }
 
     /**
-     * TODO add completed game test
+     * TODO add completed game logic
      * @param Game $game
      * @return bool
      */
