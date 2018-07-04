@@ -42,8 +42,7 @@ class GamePlayService implements GamePlayServiceInterface
             //last movement?
             count($emptyBoardStateIndexes) == 1 ?
                 $game->setStatus(GameStatusHelper::COMPLETED) :
-                $game->setStatus(GameStatusHelper::ONGOING)
-            ;
+                $game->setStatus(GameStatusHelper::ONGOING);
 
             //Bot chooses a random boardStateIndex.
             $emptyRandomlyBoardStateIndex = $emptyBoardStateIndexes[array_rand($emptyBoardStateIndexes)];
@@ -72,7 +71,36 @@ class GamePlayService implements GamePlayServiceInterface
      */
     private function isGameCompleted(Game $game)
     {
-        return false;
+        $boardStates = $game->getBoard()->getBoardStates();
+        //Check rows.
+        /** @var BoardState $boardState */
+        foreach ($boardStates as $boardState) {
+            if ($this->checkRow($boardState->getX0(), $boardState->getX1(), $boardState->getX2())) {
+                return true;
+            }
+        }
+
+        //Check columns.
+        $result[] = $this->checkRow($boardStates[0]->getX0(), $boardStates[1]->getX0(), $boardStates[2]->getX0());
+        $result[] = $this->checkRow($boardStates[0]->getX1(), $boardStates[1]->getX1(), $boardStates[2]->getX1());
+        $result[] = $this->checkRow($boardStates[0]->getX2(), $boardStates[1]->getX2(), $boardStates[2]->getX2());
+
+        //Check diagonals.
+        $result[] = $this->checkRow($boardStates[0]->getX0(), $boardStates[1]->getX1(), $boardStates[2]->getX2());
+        $result[] = $this->checkRow($boardStates[0]->getX2(), $boardStates[1]->getX1(), $boardStates[2]->getX0());
+
+        return in_array(true, $result) ? true : false;
+    }
+
+    /**
+     * @param $X0
+     * @param $X1
+     * @param $X2
+     * @return bool
+     */
+    private function checkRow($X0, $X1, $X2)
+    {
+        return ($X0 == $X1) and ($X0 == $X2)  ? true : false;
     }
 
     /**
@@ -105,6 +133,7 @@ class GamePlayService implements GamePlayServiceInterface
 
         return $freeIndexes;
     }
+
 
 
 }
