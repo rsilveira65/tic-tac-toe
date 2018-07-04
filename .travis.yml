@@ -6,6 +6,7 @@ services:
 before_script:
   - docker-compose up -d --build
   - docker-compose exec --user=root application composer install
+  - docker-compose exec --user=root application bin/console doctrine:schema:update --force
 script:
   - docker exec --user=root application composer test
 matrix:
