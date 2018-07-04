@@ -22,12 +22,10 @@ class GameRequestServiceTest extends \PHPUnit_Framework_TestCase
             ->getMockBuilder(Request::class)
             ->getMock();
 
-        //set the return value
         $request
             ->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue('{"gameId": 3, "playerId": 4, "board": [[" "," "," "],[" "," "," "],[" "," "," "]],"move": [0, 2, "X"]}'));
-
 
         $parameters = $this->gameRequestService->getBoardParametersFromRequest($request);
 

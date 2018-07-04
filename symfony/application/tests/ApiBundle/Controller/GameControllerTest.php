@@ -27,11 +27,11 @@ class DefaultControllerTest extends \PHPUnit_Framework_TestCase
 
         $data = json_decode($response->getBody(), true);
 
-//        $this->assertArrayHasKey('gameId', $data);
-//        $this->assertArrayHasKey('board', $data);
-//        $this->assertArrayHasKey('message', $data);
-//        $this->assertArrayHasKey('type', $data);
-//        $this->assertArrayHasKey('status', $data);
+        $this->assertArrayHasKey('gameId', $data);
+        $this->assertArrayHasKey('board', $data);
+        $this->assertArrayHasKey('message', $data);
+        $this->assertArrayHasKey('type', $data);
+        $this->assertArrayHasKey('status', $data);
         $this->assertEquals(true, is_int($data['gameId']));
 
         $this->assertEquals('Board created/updated successfully!', $data['message']);
@@ -56,11 +56,11 @@ class DefaultControllerTest extends \PHPUnit_Framework_TestCase
 
         $data = json_decode($response->getBody(), true);
 
-//        $this->assertArrayHasKey('gameId', $data);
-//        $this->assertArrayHasKey('board', $data);
-//        $this->assertArrayHasKey('message', $data);
-//        $this->assertArrayHasKey('type', $data);
-//        $this->assertArrayHasKey('status', $data);
+        $this->assertArrayHasKey('gameId', $data);
+        $this->assertArrayHasKey('board', $data);
+        $this->assertArrayHasKey('message', $data);
+        $this->assertArrayHasKey('type', $data);
+        $this->assertArrayHasKey('status', $data);
 
         $this->assertEquals('X', $data['board'][0][2]);
 
