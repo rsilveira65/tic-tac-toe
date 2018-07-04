@@ -39,16 +39,24 @@ class GamePlayService implements GamePlayServiceInterface
         if (!$this->isGameCompleted($game)) {
             $emptyBoardStateIndexes = $this->getEmptyBoardStateIndexesByGame($game);
 
-            $emptyBoardStateIndex = $emptyBoardStateIndexes[array_rand($emptyBoardStateIndexes)];
+            //last movement?
+            count($emptyBoardStateIndexes) == 1 ?
+                $game->setStatus(GameStatusHelper::COMPLETED) :
+                $game->setStatus(GameStatusHelper::ONGOING)
+            ;
+
+            //Bot chooses a random boardStateIndex.
+            $emptyRandomlyBoardStateIndex = $emptyBoardStateIndexes[array_rand($emptyBoardStateIndexes)];
 
             $boardStates = $game->getBoard()->getBoardStates();
 
-            $setter = "setX{$emptyBoardStateIndex[GameMoveIndexHelper::X]}";
-            $boardState = $boardStates[$emptyBoardStateIndex[GameMoveIndexHelper::Y]];
+            $setter = "setX{$emptyRandomlyBoardStateIndex[GameMoveIndexHelper::X]}";
+            $boardState = $boardStates[$emptyRandomlyBoardStateIndex[GameMoveIndexHelper::Y]];
 
-            $boardState->{$setter}($emptyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
+            $boardState->{$setter}($emptyRandomlyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
 
             $this->entityManager->persist($boardState);
+
         }
 
         $this->entityManager->persist($game);

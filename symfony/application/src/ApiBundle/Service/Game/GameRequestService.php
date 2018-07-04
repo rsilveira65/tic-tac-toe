@@ -8,7 +8,6 @@
 
 namespace ApiBundle\Service\Game;
 
-
 use Symfony\Component\HttpFoundation\Request;
 
 class GameRequestService
@@ -26,6 +25,10 @@ class GameRequestService
         return $this;
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function getBoardParametersFromRequest(Request $request)
     {
         return json_decode($request->getContent(), true);
