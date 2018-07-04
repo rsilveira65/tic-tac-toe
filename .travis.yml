@@ -5,6 +5,7 @@ services:
   - docker
 before_script:
   - docker-compose up -d --build
+  - docker exec application ./vendor/bin/simple-phpunit
 script:
   - docker exec application ./vendor/bin/simple-phpunit
 matrix:
