@@ -16,8 +16,20 @@ class GameStatusHelperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             1,
-            GameStatusHelper::COMPLETED,
-            'const COMPLETED must be 1.'
+            GameStatusHelper::PLAYER_WON,
+            'const PLAYER_WON must be 1.'
+        );
+
+        $this->assertEquals(
+            3,
+            GameStatusHelper::DRAW,
+            'const DRAW must be 3.'
+        );
+
+        $this->assertEquals(
+            2,
+            GameStatusHelper::BOT_WON,
+            'const DRAW must be 2.'
         );
     }
 }

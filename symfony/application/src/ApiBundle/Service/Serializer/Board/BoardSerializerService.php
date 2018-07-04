@@ -26,6 +26,7 @@ class BoardSerializerService
             'board' => [],
             'message' => 'Board created/updated successfully!',
             'type' => 'success',
+            'action' => $this->getActionByStatus($game->getStatus()),
             'status' => $game->getStatus() == GameStatusHelper::ONGOING ? 'Ongoing' : 'Completed'
         ];
 
@@ -38,5 +39,28 @@ class BoardSerializerService
         }
 
         return $normalizedBoardResponse;
+    }
+
+    /**
+     * @param $status
+     * @return string
+     */
+    private function getActionByStatus($status)
+    {
+        $action = 'PlayNextTime';
+
+        if ($status == GameStatusHelper::BOT_WON) {
+            $action = 'BotWon';
+        }
+
+        if ($status == GameStatusHelper::PLAYER_WON) {
+            $action = 'PlayerWon';
+        }
+
+        if ($status == GameStatusHelper::DRAW) {
+            $action = 'Draw';
+        }
+
+        return $action;
     }
 }

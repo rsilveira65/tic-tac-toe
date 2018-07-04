@@ -16,5 +16,7 @@ namespace ApiBundle\Helper;
 class GameStatusHelper
 {
     const ONGOING = 0;
-    const COMPLETED = 1;
+    const PLAYER_WON = 1;
+    const BOT_WON = 2;
+    const DRAW = 3;
 }

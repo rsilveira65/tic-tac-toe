@@ -34,15 +34,12 @@ class GamePlayService implements GamePlayServiceInterface
      */
     public function makeMove(Game $game)
     {
-        $game->setStatus(GameStatusHelper::COMPLETED);
+        //Player won
+        $game->setStatus(GameStatusHelper::PLAYER_WON);
 
-        if (!$this->isGameCompleted($game)) {
+        if (!$this->isGameCompletedForPlayer($game, 'X')) {
+            $game->setStatus(GameStatusHelper::ONGOING);
             $emptyBoardStateIndexes = $this->getEmptyBoardStateIndexesByGame($game);
-
-            //last movement?
-            count($emptyBoardStateIndexes) == 1 ?
-                $game->setStatus(GameStatusHelper::COMPLETED) :
-                $game->setStatus(GameStatusHelper::ONGOING);
 
             //Bot chooses a random boardStateIndex.
             $emptyRandomlyBoardStateIndex = $emptyBoardStateIndexes[array_rand($emptyBoardStateIndexes)];
@@ -55,6 +52,19 @@ class GamePlayService implements GamePlayServiceInterface
             $boardState->{$setter}($emptyRandomlyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
 
             $this->entityManager->persist($boardState);
+            $this->entityManager->flush();
+
+            //BOT won the game.
+            $botWonGame = $this->isGameCompletedForPlayer($game, 'O');
+
+            if ($botWonGame) {
+                $game->setStatus(GameStatusHelper::BOT_WON);
+            }
+
+            //Latest move.
+            if (!$botWonGame and count($emptyBoardStateIndexes) == 1) {
+                $game->setStatus(GameStatusHelper::DRAW);
+            }
         }
 
         $this->entityManager->persist($game);
@@ -65,42 +75,44 @@ class GamePlayService implements GamePlayServiceInterface
 
     /**
      * @param Game $game
+     * @param string $player
      * @return bool
      */
-    private function isGameCompleted(Game $game)
+    private function isGameCompletedForPlayer(Game $game, $player = 'X')
     {
         $boardStates = $game->getBoard()->getBoardStates();
         //Check rows.
         /** @var BoardState $boardState */
         foreach ($boardStates as $boardState) {
-            if ($this->checkRow($boardState->getX0(), $boardState->getX1(), $boardState->getX2())) {
+            if ($this->checkRow([$boardState->getX0(), $boardState->getX1(), $boardState->getX2()], $player)) {
                 return true;
             }
         }
 
         //Check columns.
-        $result[] = $this->checkRow([$boardStates[0]->getX0(), $boardStates[1]->getX0(), $boardStates[2]->getX0()]);
-        $result[] = $this->checkRow([$boardStates[0]->getX1(), $boardStates[1]->getX1(), $boardStates[2]->getX1()]);
-        $result[] = $this->checkRow([$boardStates[0]->getX2(), $boardStates[1]->getX2(), $boardStates[2]->getX2()]);
+        $result[] = $this->checkRow([$boardStates[0]->getX0(), $boardStates[1]->getX0(), $boardStates[2]->getX0()], $player);
+        $result[] = $this->checkRow([$boardStates[0]->getX1(), $boardStates[1]->getX1(), $boardStates[2]->getX1()], $player);
+        $result[] = $this->checkRow([$boardStates[0]->getX2(), $boardStates[1]->getX2(), $boardStates[2]->getX2()], $player);
 
         //Check diagonals.
-        $result[] = $this->checkRow([$boardStates[0]->getX0(), $boardStates[1]->getX1(), $boardStates[2]->getX2()]);
-        $result[] = $this->checkRow([$boardStates[0]->getX2(), $boardStates[1]->getX1(), $boardStates[2]->getX0()]);
+        $result[] = $this->checkRow([$boardStates[0]->getX0(), $boardStates[1]->getX1(), $boardStates[2]->getX2()], $player);
+        $result[] = $this->checkRow([$boardStates[0]->getX2(), $boardStates[1]->getX1(), $boardStates[2]->getX0()], $player);
 
         return in_array(true, $result) ? true : false;
     }
 
     /**
-     * @param $values
+     * @param array $values
+     * @param string $player
      * @return bool
      */
-    private function checkRow($values)
+    private function checkRow($values, $player = 'X')
     {
         foreach ($values as $value) {
             if (ctype_space($value)) return false;
         }
 
-        return ($values[0] == $values[1]) and ($values[0] == $values[2])  ? true : false;
+        return ($values[0] == $player and $values[1] == $player) and ($values[0] == $player and $values[2] == $player) ? true : false;
     }
 
     /**
