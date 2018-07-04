@@ -5,7 +5,7 @@ services:
   - docker
 before_script:
   - docker-compose up -d --build
-  - docker-compose exec --user=root composer install --no
+  - docker-compose exec --user=root application composer install
 script:
   - docker exec application composer test
 matrix:
