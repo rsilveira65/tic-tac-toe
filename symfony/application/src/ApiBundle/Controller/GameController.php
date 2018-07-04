@@ -10,6 +10,7 @@ namespace ApiBundle\Controller;
 
 use ApiBundle\Entity\Board;
 use ApiBundle\Entity\Game;
+use ApiBundle\Helper\GameStatusHelper;
 use ApiBundle\Service\Game\GamePlayService;
 use ApiBundle\Service\Game\GameRequestService;
 use ApiBundle\Service\Game\GameService;
@@ -64,23 +65,25 @@ class GameController extends AbstractController
     {
         try {
 
-            /** @var GameRequestService $gameRequestService */
-            $gameRequestService = $this->get('api.game_request_service');
+            if ($game->getStatus() == GameStatusHelper::ONGOING) {
+                /** @var GameRequestService $gameRequestService */
+                $gameRequestService = $this->get('api.game_request_service');
 
-            /** @var Board $board */
-            $parameters = $gameRequestService->getBoardParametersFromRequest($request);
+                /** @var Board $board */
+                $parameters = $gameRequestService->getBoardParametersFromRequest($request);
 
-            /** @var GameService $gameService */
-            $gameService = $this->get('api.game_service');
-            $gameService->setGame($game);
+                /** @var GameService $gameService */
+                $gameService = $this->get('api.game_service');
+                $gameService->setGame($game);
 
-            /** @var Game $game */
-            $game = $gameService->updateGame($parameters);
+                /** @var Game $game */
+                $game = $gameService->updateGame($parameters);
 
-            /** @var GamePlayService $gamePlayService */
-            $gamePlayService = $this->get('api.game_play_service');
+                /** @var GamePlayService $gamePlayService */
+                $gamePlayService = $this->get('api.game_play_service');
 
-            $game = $gamePlayService->makeMove($game);
+                $game = $gamePlayService->makeMove($game);
+            }
 
             /** @var BoardSerializerService $boardSerializerService */
             $boardSerializerService = $this->get('api.board_serializer_service');

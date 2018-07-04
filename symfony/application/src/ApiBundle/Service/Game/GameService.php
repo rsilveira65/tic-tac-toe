@@ -46,14 +46,6 @@ class GameService
     }
 
     /**
-     * @return mixed
-     */
-    private function getGame()
-    {
-        return $this->game;
-    }
-
-    /**
      * @return Game
      */
     public function createGame()

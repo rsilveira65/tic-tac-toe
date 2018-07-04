@@ -55,7 +55,6 @@ class GamePlayService implements GamePlayServiceInterface
             $boardState->{$setter}($emptyRandomlyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
 
             $this->entityManager->persist($boardState);
-
         }
 
         $this->entityManager->persist($game);
@@ -65,7 +64,6 @@ class GamePlayService implements GamePlayServiceInterface
     }
 
     /**
-     * TODO add completed game logic
      * @param Game $game
      * @return bool
      */
@@ -133,7 +131,5 @@ class GamePlayService implements GamePlayServiceInterface
 
         return $freeIndexes;
     }
-
-
 
 }
