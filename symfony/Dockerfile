@@ -32,8 +32,6 @@ RUN useradd --uid ${UID:-1000} --no-user-group -g www-data \
 RUN curl -sS https://getcomposer.org/installer | php -- \
   --install-dir=/usr/local/bin --filename=composer
 
-RUN composer global require 'phpunit/phpunit=4.1.*'
-
 ENV HOME=/home/rsilveira
 ENV APP=/home/rsilveira/application
 
