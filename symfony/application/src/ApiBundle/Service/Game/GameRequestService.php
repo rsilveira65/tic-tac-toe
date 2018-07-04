@@ -31,7 +31,6 @@ class GameRequestService
      */
     public function getBoardParametersFromRequest(Request $request)
     {
-//        dump($request->getContent());die;
         return json_decode($request->getContent(), true);
     }
 
