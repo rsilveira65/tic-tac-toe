@@ -37,7 +37,7 @@ class Board
      * @var Collection
      * One Board has Many BoardStates
      *
-     * @ORM\OneToMany(targetEntity="BoardState", mappedBy="board")
+     * @ORM\OneToMany(targetEntity="BoardState", mappedBy="board", cascade={"persist"})
      */
     private $boardStates;
 
@@ -86,7 +86,7 @@ class Board
     /**
      * @param BoardState $boardState
      */
-    public function addRound(BoardState $boardState)
+    public function addBoardState(BoardState $boardState)
     {
         $this->boardStates->add($boardState);
     }

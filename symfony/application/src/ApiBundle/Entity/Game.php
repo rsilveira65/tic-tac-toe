@@ -46,8 +46,6 @@ class Game
     private $modified;
 
     /**
-     * @Assert\NotBlank()
-     *
      * Many Games have One PlayerOne
      *
      * @ORM\ManyToOne(targetEntity="Player")
@@ -68,7 +66,7 @@ class Game
      *
      * One Game has One Board
      *
-     * @ORM\OneToOne(targetEntity="Board", mappedBy="game")
+     * @ORM\OneToOne(targetEntity="Board", mappedBy="game", cascade={"persist"})
      */
     private $board;
 

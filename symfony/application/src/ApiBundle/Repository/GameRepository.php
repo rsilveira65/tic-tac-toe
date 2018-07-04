@@ -2,10 +2,12 @@
 
 namespace ApiBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+
 /**
  * GameRepository
  */
-class GameRepository
+class GameRepository extends EntityRepository
 {
 
 }

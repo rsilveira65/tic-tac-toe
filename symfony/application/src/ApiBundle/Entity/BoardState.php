@@ -55,23 +55,23 @@ class BoardState
     /**
      * @var string
      *
-     * @ORM\Column(name="x", type="string", length=255)
+     * @ORM\Column(name="x0", type="string", length=255)
      */
-    private $x;
+    private $x0;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="y", type="string", length=255)
+     * @ORM\Column(name="x1", type="string", length=255)
      */
-    private $y;
+    private $x1;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="z", type="string", length=255)
+     * @ORM\Column(name="x2", type="string", length=255)
      */
-    private $z;
+    private $x2;
 
     /**
      * Round constructor.
@@ -152,75 +152,75 @@ class BoardState
     }
 
     /**
-     * Set X
+     * Set X0
      *
-     * @param string $x
+     * @param string $x0
      *
      * @return BoardState
      */
-    public function setX($x)
+    public function setX0($x0)
     {
-        $this->x = $x;
+        $this->x0 = $x0;
 
         return $this;
     }
 
     /**
-     * Get X
+     * Get X0
      *
      * @return string
      */
-    public function getX()
+    public function getX0()
     {
-        return $this->x;
+        return $this->x0;
     }
 
     /**
-     * Set Y
+     * Set X1
      *
-     * @param string $y
+     * @param string $x1
      *
      * @return BoardState
      */
-    public function setY($y)
+    public function setX1($x1)
     {
-        $this->y = $y;
+        $this->x1 = $x1;
 
         return $this;
     }
 
     /**
-     * Get Y
+     * Get X1
      *
      * @return string
      */
-    public function getY()
+    public function getX1()
     {
-        return $this->y;
+        return $this->x1;
     }
 
     /**
-     * Set Z
+     * Set X2
      *
-     * @param string $z
+     * @param string $x2
      *
      * @return BoardState
      */
-    public function setZ($z)
+    public function setX2($x2)
     {
-        $this->z = $z;
+        $this->x2 = $x2;
 
         return $this;
     }
 
     /**
-     * Get Z
+     * Get X2
      *
      * @return string
      */
-    public function getZ()
+    public function getX2()
     {
-        return $this->z;
+        return $this->x2;
     }
 }
 

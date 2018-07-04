@@ -4,6 +4,13 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    api.game_service:
+        class: ApiBundle\Service\Game\GameService
+        arguments: ["@doctrine.orm.entity_manager"]
+    api.game_play_service:
+        class: ApiBundle\Service\Game\GamePlayService
+        arguments: ["@doctrine.orm.entity_manager"]
+    api.game_request_service:
+        class: ApiBundle\Service\Game\GameRequestService
+    api.board_serializer_service:
+        class: ApiBundle\Service\Serializer\Board\BoardSerializerService
