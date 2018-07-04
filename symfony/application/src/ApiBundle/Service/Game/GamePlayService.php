@@ -79,26 +79,28 @@ class GamePlayService implements GamePlayServiceInterface
         }
 
         //Check columns.
-        $result[] = $this->checkRow($boardStates[0]->getX0(), $boardStates[1]->getX0(), $boardStates[2]->getX0());
-        $result[] = $this->checkRow($boardStates[0]->getX1(), $boardStates[1]->getX1(), $boardStates[2]->getX1());
-        $result[] = $this->checkRow($boardStates[0]->getX2(), $boardStates[1]->getX2(), $boardStates[2]->getX2());
+        $result[] = $this->checkRow([$boardStates[0]->getX0(), $boardStates[1]->getX0(), $boardStates[2]->getX0()]);
+        $result[] = $this->checkRow([$boardStates[0]->getX1(), $boardStates[1]->getX1(), $boardStates[2]->getX1()]);
+        $result[] = $this->checkRow([$boardStates[0]->getX2(), $boardStates[1]->getX2(), $boardStates[2]->getX2()]);
 
         //Check diagonals.
-        $result[] = $this->checkRow($boardStates[0]->getX0(), $boardStates[1]->getX1(), $boardStates[2]->getX2());
-        $result[] = $this->checkRow($boardStates[0]->getX2(), $boardStates[1]->getX1(), $boardStates[2]->getX0());
+        $result[] = $this->checkRow([$boardStates[0]->getX0(), $boardStates[1]->getX1(), $boardStates[2]->getX2()]);
+        $result[] = $this->checkRow([$boardStates[0]->getX2(), $boardStates[1]->getX1(), $boardStates[2]->getX0()]);
 
         return in_array(true, $result) ? true : false;
     }
 
     /**
-     * @param $X0
-     * @param $X1
-     * @param $X2
+     * @param $values
      * @return bool
      */
-    private function checkRow($X0, $X1, $X2)
+    private function checkRow($values)
     {
-        return ($X0 == $X1) and ($X0 == $X2)  ? true : false;
+        foreach ($values as $value) {
+            if (ctype_space($value)) return false;
+        }
+
+        return ($values[0] == $values[1]) and ($values[0] == $values[2])  ? true : false;
     }
 
     /**

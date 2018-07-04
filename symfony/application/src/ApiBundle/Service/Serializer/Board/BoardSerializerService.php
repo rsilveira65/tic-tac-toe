@@ -23,6 +23,7 @@ class BoardSerializerService
     public function serialize(Game $game)
     {
         $normalizedBoardResponse = [
+            'gameId' => $game->getId(),
             'board' => [],
             'message' => 'Board created/updated successfully!',
             'type' => 'success',
