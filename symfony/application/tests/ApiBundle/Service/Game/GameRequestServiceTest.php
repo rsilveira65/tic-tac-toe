@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\ApiBundle\Service\Controller;
+namespace Tests\ApiBundle\Service\Game;
 
 use ApiBundle\Service\Game\GameRequestService;
 use Symfony\Component\HttpFoundation\Request;
