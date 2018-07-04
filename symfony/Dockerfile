@@ -6,7 +6,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   vim \
   git \
   unzip \
-  cron \
   libcurl3-dev \
   zlib1g-dev \
   libicu-dev \
