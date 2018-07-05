@@ -44,14 +44,105 @@ interface MoveInterface
 - Make sure to provide instructions how to view/run the application/service. If you do not complete the whole exercise - make sure to submit whatever you have before deadline. The style of the web interface isirrelevant, as long as it works the way it should.
 
 ## Getting Started
-Just make sure you have docker and docker-compose properly installed.
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+Just make sure you have [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/) properly installed.
+
 ```sh
 docker --version
 docker-compose --version
 ```
 
+### Installing
+
 ```sh
 docker-compose up -d
+```
+
+Create the database schema.
+
+```sh
+docker exec application bin/console doctrine:schema:update --force
+```
+
+Access on your browser http://localhost
+![alt tag](http://i.imgur.com/S8HTx9G.png)
+
+
+## API Routes
+[Download the Postman collection](https://www.getpostman.com/collections/1f42decf154f1d5ab3f1)
+### New game
+```bash
+POST: {{URL}}/api/game/new
+```
+##### Response:
+```bash
+{
+    "gameId": 108,
+    "board": [
+        [
+            " ",
+            " ",
+            " "
+        ],
+        [
+            " ",
+            " ",
+            " "
+        ],
+        [
+            " ",
+            " ",
+            " "
+        ]
+    ],
+    "message": "Board created/updated successfully!",
+    "type": "success",
+    "action": "PlayNextTime",
+    "move": null,
+    "status": "Ongoing"
+}
+```
+
+### Play game
+```bash
+POST: {{URL}}/api/game/{{game_id}}/play
+```
+##### Body:
+```bash
+{
+    "move": [1, 2, "X"]
+}
+```
+##### Response:
+```bash
+{
+    "gameId": 1,
+    "board": [
+        [
+            "O",
+            " ",
+            "X"
+        ],
+        [
+            "O",
+            "X",
+            "X"
+        ],
+        [
+            "O",
+            " ",
+            "O"
+        ]
+    ],
+    "message": "Board created/updated successfully!",
+    "type": "success",
+    "action": "BotWon",
+    "move": [1, 2, "O"]
+    "status": "Completed"
+}
 ```
 
 ## Unit Tests
