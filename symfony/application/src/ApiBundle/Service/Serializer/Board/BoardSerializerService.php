@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rsilveira
- * Date: 03/07/18
- * Time: 18:01
- */
 
 namespace ApiBundle\Service\Serializer\Board;
 
@@ -13,6 +7,11 @@ use ApiBundle\Entity\BoardState;
 use ApiBundle\Entity\Game;
 use ApiBundle\Helper\GameStatusHelper;
 
+/**
+ * Class BoardSerializerService
+ * @author Rafael Silveira <rsilveiracc@gmail.com>
+ * @package ApiBundle\Service\Serializer\Board
+ */
 class BoardSerializerService
 {
     /**
@@ -22,12 +21,12 @@ class BoardSerializerService
     public function serialize(Game $game)
     {
         $normalizedBoardResponse = [
-            'gameId' => $game->getId(),
-            'board' => [],
+            'gameId'  => $game->getId(),
+            'board'   => [],
             'message' => 'Board created/updated successfully!',
-            'type' => 'success',
-            'action' => $this->getActionByStatus($game->getStatus()),
-            'status' => $game->getStatus() == GameStatusHelper::ONGOING ? 'Ongoing' : 'Completed'
+            'type'    => 'success',
+            'action'  => $this->getActionByStatus($game->getStatus()),
+            'status'  => $game->getStatus() == GameStatusHelper::ONGOING ? 'Ongoing' : 'Completed'
         ];
 
         /** @var Board $board */

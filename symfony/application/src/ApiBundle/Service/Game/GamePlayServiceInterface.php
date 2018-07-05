@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rsilveira
- * Date: 03/07/18
- * Time: 17:48
- */
 
 namespace ApiBundle\Service\Game;
+
 use ApiBundle\Entity\Game;
 
 /**
- * Class AbstractGamePlayService
+ * Class GamePlayServiceInterface
  * @author Rafael Silveira <rsilveiracc@gmail.com>
  * @package ApiBundle\Service\Game
  */

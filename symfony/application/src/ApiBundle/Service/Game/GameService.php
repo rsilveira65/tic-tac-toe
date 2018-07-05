@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rsilveira
- * Date: 03/07/18
- * Time: 18:01
- */
 
 namespace ApiBundle\Service\Game;
 
@@ -15,6 +9,11 @@ use ApiBundle\Helper\GameMoveIndexHelper;
 use ApiBundle\Helper\GameStatusHelper;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Class GameService
+ * @author Rafael Silveira <rsilveiracc@gmail.com>
+ * @package ApiBundle\Service\Game
+ */
 class GameService
 {
     /** @var  Game $game */

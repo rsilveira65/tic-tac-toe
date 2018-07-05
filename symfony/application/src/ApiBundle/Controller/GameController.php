@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rsilveira
- * Date: 03/07/18
- * Time: 17:02
- */
 
 namespace ApiBundle\Controller;
 

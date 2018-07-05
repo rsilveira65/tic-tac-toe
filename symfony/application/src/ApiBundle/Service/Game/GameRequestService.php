@@ -1,15 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rsilveira
- * Date: 03/07/18
- * Time: 18:03
- */
 
 namespace ApiBundle\Service\Game;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class GameRequestService
+ * @author Rafael Silveira <rsilveiracc@gmail.com>
+ * @package ApiBundle\Service\Game
+ */
 class GameRequestService
 {
     private $request;
