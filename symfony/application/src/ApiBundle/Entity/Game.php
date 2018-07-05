@@ -55,6 +55,11 @@ class Game
     private $board;
 
     /**
+     * @var array
+     */
+    private $move;
+
+    /**
      * Get id
      *
      * @return int
@@ -154,6 +159,24 @@ class Game
     public function getBoard()
     {
         return $this->board;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMove()
+    {
+        return $this->move;
+    }
+
+    /**
+     * @param array $move
+     * @return Board
+     */
+    public function setMove($move)
+    {
+        $this->move = $move;
+        return $this;
     }
 }
 

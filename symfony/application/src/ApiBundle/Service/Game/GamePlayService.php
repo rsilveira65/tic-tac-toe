@@ -70,6 +70,14 @@ class GamePlayService implements GamePlayServiceInterface
 
         $boardState->{$setter}($emptyRandomlyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
 
+        $game->setMove(
+            [
+                $emptyRandomlyBoardStateIndex[GameMoveIndexHelper::Y],
+                $emptyRandomlyBoardStateIndex[GameMoveIndexHelper::X],
+                $emptyRandomlyBoardStateIndex[GameMoveIndexHelper::PLAYER]
+            ]
+        );
+
         $this->entityManager->persist($boardState);
 
         $botWonGame = $this->isGameCompletedForPlayer($game, self::BOT);

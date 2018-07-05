@@ -41,6 +41,7 @@ class Board
      */
     private $boardStates;
 
+
     /**
      * Board constructor.
      */
@@ -90,4 +91,5 @@ class Board
     {
         $this->boardStates->add($boardState);
     }
+
 }

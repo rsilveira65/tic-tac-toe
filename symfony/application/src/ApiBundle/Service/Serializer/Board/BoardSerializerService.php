@@ -26,7 +26,8 @@ class BoardSerializerService
             'message' => 'Board created/updated successfully!',
             'type'    => 'success',
             'action'  => $this->getActionByStatus($game->getStatus()),
-            'status'  => $game->getStatus() == GameStatusHelper::ONGOING ? 'Ongoing' : 'Completed'
+            'move'    => $game->getMove(),
+            'status'  => $game->getStatus() == GameStatusHelper::ONGOING ? 'Ongoing' : 'Completed',
         ];
 
         /** @var Board $board */

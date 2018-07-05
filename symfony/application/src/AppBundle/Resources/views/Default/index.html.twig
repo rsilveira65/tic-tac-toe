@@ -1,0 +1,33 @@
+{% extends 'AppBundle:Component:base.html.twig' %}
+
+{% block body %}
+    <div id="game-wrap">
+
+        <div class="row">
+            <div class="col col-0-0"></div>
+            <div class="col col-0-1"></div>
+            <div class="col col-0-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col col-1-0"></div>
+            <div class="col col-1-1"></div>
+            <div class="col col-1-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col col-2-0"></div>
+            <div class="col col-2-1"></div>
+            <div class="col col-2-2"></div>
+        </div>
+
+    </div>
+
+    <div id="panel">
+        <input type="text" id="player-1-inp" placeholder="Bot (Player O)" disabled="disabled">
+        <input type="text" id="player-2-inp" placeholder="Please set your name">
+
+        <button id="playButton">Play!</button>
+        <h1 id="board"></h1>
+    </div>
+{% endblock %}
