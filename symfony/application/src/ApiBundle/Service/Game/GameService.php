@@ -91,9 +91,6 @@ class GameService
         return $this->game;
     }
 
-    /**
-     *
-     */
     private function createStates()
     {
         for ($state = 1; $state <= self::NUMBER_OF_BOARD_STATES; $state++) {
