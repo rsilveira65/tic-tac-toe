@@ -19,6 +19,10 @@ class GamePlayService implements GamePlayServiceInterface
     /** @var  EntityManager $entityManager */
     private $entityManager;
 
+    const PLAYER = 'X';
+
+    const BOT = 'O';
+
     /**
      * GamePlayService constructor.
      * @param EntityManager $entityManager
@@ -37,34 +41,10 @@ class GamePlayService implements GamePlayServiceInterface
         //Player won
         $game->setStatus(GameStatusHelper::PLAYER_WON);
 
-        if (!$this->isGameCompletedForPlayer($game, 'X')) {
+        if (!$this->isGameCompletedForPlayer($game, self::PLAYER)) {
             $game->setStatus(GameStatusHelper::ONGOING);
-            $emptyBoardStateIndexes = $this->getEmptyBoardStateIndexesByGame($game);
 
-            //Bot chooses a random boardStateIndex.
-            $emptyRandomlyBoardStateIndex = $emptyBoardStateIndexes[array_rand($emptyBoardStateIndexes)];
-
-            $boardStates = $game->getBoard()->getBoardStates();
-
-            $setter = "setX{$emptyRandomlyBoardStateIndex[GameMoveIndexHelper::X]}";
-            $boardState = $boardStates[$emptyRandomlyBoardStateIndex[GameMoveIndexHelper::Y]];
-
-            $boardState->{$setter}($emptyRandomlyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
-
-            $this->entityManager->persist($boardState);
-            $this->entityManager->flush();
-
-            //BOT won the game.
-            $botWonGame = $this->isGameCompletedForPlayer($game, 'O');
-
-            if ($botWonGame) {
-                $game->setStatus(GameStatusHelper::BOT_WON);
-            }
-
-            //Latest move.
-            if (!$botWonGame and count($emptyBoardStateIndexes) == 1) {
-                $game->setStatus(GameStatusHelper::DRAW);
-            }
+            $this->playGameAsBotPlayer($game);
         }
 
         $this->entityManager->persist($game);
@@ -75,10 +55,41 @@ class GamePlayService implements GamePlayServiceInterface
 
     /**
      * @param Game $game
+     */
+    private function playGameAsBotPlayer(Game $game)
+    {
+        $emptyBoardStateIndexes = $this->getEmptyBoardStateIndexesByGame($game);
+
+        //Bot chooses a random boardStateIndex.
+        $emptyRandomlyBoardStateIndex = $emptyBoardStateIndexes[array_rand($emptyBoardStateIndexes)];
+
+        $boardStates = $game->getBoard()->getBoardStates();
+
+        $setter = "setX{$emptyRandomlyBoardStateIndex[GameMoveIndexHelper::X]}";
+        $boardState = $boardStates[$emptyRandomlyBoardStateIndex[GameMoveIndexHelper::Y]];
+
+        $boardState->{$setter}($emptyRandomlyBoardStateIndex[GameMoveIndexHelper::PLAYER]);
+
+        $this->entityManager->persist($boardState);
+
+        $botWonGame = $this->isGameCompletedForPlayer($game, self::BOT);
+
+        if ($botWonGame) {
+            $game->setStatus(GameStatusHelper::BOT_WON);
+        }
+
+        //Latest move.
+        if (!$botWonGame and count($emptyBoardStateIndexes) == 1) {
+            $game->setStatus(GameStatusHelper::DRAW);
+        }
+    }
+
+    /**
+     * @param Game $game
      * @param string $player
      * @return bool
      */
-    private function isGameCompletedForPlayer(Game $game, $player = 'X')
+    private function isGameCompletedForPlayer(Game $game, $player)
     {
         $boardStates = $game->getBoard()->getBoardStates();
         //Check rows.
@@ -106,7 +117,7 @@ class GamePlayService implements GamePlayServiceInterface
      * @param string $player
      * @return bool
      */
-    private function checkRow($values, $player = 'X')
+    private function checkRow($values, $player)
     {
         foreach ($values as $value) {
             if (ctype_space($value)) return false;
@@ -124,23 +135,23 @@ class GamePlayService implements GamePlayServiceInterface
         /** @var Board $board */
         $board = $game->getBoard();
 
-        $coordinateY = 0;
+        $row = 0;
         $freeIndexes = [];
         /** @var BoardState $boardState */
         foreach ($board->getBoardStates() as $boardState) {
             if (!trim($boardState->getX0())) {
-                $freeIndexes[] = [$coordinateY, 0, 'O'];
+                $freeIndexes[] = [$row, 0, 'O'];
             }
 
             if (!trim($boardState->getX1())) {
-                $freeIndexes[] = [$coordinateY, 1, 'O'];
+                $freeIndexes[] = [$row, 1, 'O'];
             }
 
             if (!trim($boardState->getX2())) {
-                $freeIndexes[] = [$coordinateY, 2, 'O'];
+                $freeIndexes[] = [$row, 2, 'O'];
             }
 
-            $coordinateY++;
+            $row++;
         }
 
         return $freeIndexes;

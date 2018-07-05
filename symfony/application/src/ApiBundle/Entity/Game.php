@@ -46,22 +46,6 @@ class Game
     private $modified;
 
     /**
-     * Many Games have One PlayerOne
-     *
-     * @ORM\ManyToOne(targetEntity="Player")
-     * @ORM\JoinColumn(name="player_one_id", referencedColumnName="id")
-     */
-    private $playerOne;
-
-    /**
-     * Many Games have One PlayerTwo
-     *
-     * @ORM\ManyToOne(targetEntity="Player")
-     * @ORM\JoinColumn(name="player_two_id", referencedColumnName="id", nullable=true)
-     */
-    private $playerTwo;
-
-    /**
      * @var Board
      *
      * One Game has One Board
@@ -146,54 +130,6 @@ class Game
     public function getModified()
     {
         return $this->modified;
-    }
-
-    /**
-     * Set playerOne
-     *
-     * @param Player $playerOne
-     *
-     * @return Game
-     */
-    public function setPlayerOne($playerOne)
-    {
-        $this->playerOne = $playerOne;
-
-        return $this;
-    }
-
-    /**
-     * Get playerOne
-     *
-     * @return Player
-     */
-    public function getPlayerOne()
-    {
-        return $this->playerOne;
-    }
-
-    /**
-     * Set playerTwo
-     *
-     * @param Player $playerTwo
-     *
-     * @return Game
-     */
-    public function setPlayerTwo($playerTwo)
-    {
-        $this->playerTwo = $playerTwo;
-
-        return $this;
-    }
-
-    /**
-     * Get playerTwo
-     *
-     * @return Player
-     */
-    public function getPlayerTwo()
-    {
-        return $this->playerTwo;
     }
 
     /**

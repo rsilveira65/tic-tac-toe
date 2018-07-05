@@ -8,7 +8,6 @@
 
 namespace ApiBundle\Service\Game;
 
-
 use ApiBundle\Entity\Board;
 use ApiBundle\Entity\BoardState;
 use ApiBundle\Entity\Game;
@@ -20,6 +19,7 @@ class GameService
 {
     /** @var  Game $game */
     private $game;
+
     /** @var  Board $board */
     private $board;
 
@@ -123,6 +123,7 @@ class GameService
         $gameState = $gameStates[$move[GameMoveIndexHelper::Y]];
 
         $gameState->{$setter}($move[GameMoveIndexHelper::PLAYER]);
+
         $this->entityManager->persist($gameState);
         $this->entityManager->flush();
     }

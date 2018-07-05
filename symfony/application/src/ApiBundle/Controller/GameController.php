@@ -39,6 +39,7 @@ class GameController extends AbstractController
     public function newGameAction()
     {
         try {
+
             /** @var GameService $gameService */
             $gameService = $this->get('api.game_service');
             /** @var Game $game */
