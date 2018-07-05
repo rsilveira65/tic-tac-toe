@@ -95,7 +95,7 @@ $(".col").click(function() {
 
                     grid[row][col] = 1;
                     $(".col-"+row+"-"+col).text("O");
-                    turn = 'X';
+                    turn = "X";
                 }
 
                 boardMsg(data.action);
