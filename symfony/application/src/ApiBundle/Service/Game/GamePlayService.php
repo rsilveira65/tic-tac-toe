@@ -60,6 +60,13 @@ class GamePlayService implements GamePlayServiceInterface
     {
         $emptyBoardStateIndexes = $this->getEmptyBoardStateIndexesByGame($game);
 
+        //Latest move.
+        if (empty($emptyBoardStateIndexes)) {
+            $game->setStatus(GameStatusHelper::DRAW);
+
+            return;
+        }
+
         //Bot chooses a random boardStateIndex.
         $emptyRandomlyBoardStateIndex = $emptyBoardStateIndexes[array_rand($emptyBoardStateIndexes)];
 
@@ -84,11 +91,6 @@ class GamePlayService implements GamePlayServiceInterface
 
         if ($botWonGame) {
             $game->setStatus(GameStatusHelper::BOT_WON);
-        }
-
-        //Latest move.
-        if (!$botWonGame and count($emptyBoardStateIndexes) == 1) {
-            $game->setStatus(GameStatusHelper::DRAW);
         }
     }
 
