@@ -67,9 +67,9 @@ Create the database schema.
 docker exec application bin/console doctrine:schema:update --force
 ```
 
-Access on your browser http://localhost
-![alt tag](http://i.imgur.com/S8HTx9G.png)
+Access your browser on http://localhost
 
+![](http://i.imgur.com/K9jIbUN.gif)
 
 ## API Routes
 [Download the Postman collection](https://www.getpostman.com/collections/1f42decf154f1d5ab3f1)
