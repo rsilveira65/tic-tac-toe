@@ -146,19 +146,17 @@ class GamePlayService implements GamePlayServiceInterface
         $board = $game->getBoard();
 
         $row = 0;
+        $columns = [0, 1, 2];
         $freeIndexes = [];
         /** @var BoardState $boardState */
         foreach ($board->getBoardStates() as $boardState) {
-            if (ctype_space($boardState->getX0())) {
-                $freeIndexes[] = [$row, 0, 'O'];
-            }
 
-            if (ctype_space($boardState->getX1())) {
-                $freeIndexes[] = [$row, 1, 'O'];
-            }
+            foreach ($columns as $column) {
+                $getter = sprintf('getX%s', $column);
 
-            if (ctype_space($boardState->getX2())) {
-                $freeIndexes[] = [$row, 2, 'O'];
+                if (ctype_space($boardState->{$getter}())) {
+                    $freeIndexes[] = [$row, $column, 'O'];
+                }
             }
 
             $row++;
