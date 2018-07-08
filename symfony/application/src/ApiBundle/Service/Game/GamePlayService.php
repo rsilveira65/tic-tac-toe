@@ -149,15 +149,15 @@ class GamePlayService implements GamePlayServiceInterface
         $freeIndexes = [];
         /** @var BoardState $boardState */
         foreach ($board->getBoardStates() as $boardState) {
-            if (!trim($boardState->getX0())) {
+            if (ctype_space($boardState->getX0())) {
                 $freeIndexes[] = [$row, 0, 'O'];
             }
 
-            if (!trim($boardState->getX1())) {
+            if (ctype_space($boardState->getX1())) {
                 $freeIndexes[] = [$row, 1, 'O'];
             }
 
-            if (!trim($boardState->getX2())) {
+            if (ctype_space($boardState->getX2())) {
                 $freeIndexes[] = [$row, 2, 'O'];
             }
 
