@@ -60,7 +60,7 @@ class GamePlayService implements GamePlayServiceInterface
     {
         $emptyBoardStateIndexes = $this->getEmptyBoardStateIndexesByGame($game);
 
-        //Latest move.
+        //Last move.
         if (empty($emptyBoardStateIndexes)) {
             $game->setStatus(GameStatusHelper::DRAW);
 
@@ -145,11 +145,11 @@ class GamePlayService implements GamePlayServiceInterface
         /** @var Board $board */
         $board = $game->getBoard();
 
-        $row = 0;
         $columns = [0, 1, 2];
         $freeIndexes = [];
+
         /** @var BoardState $boardState */
-        foreach ($board->getBoardStates() as $boardState) {
+        foreach ($board->getBoardStates() as $row => $boardState) {
 
             foreach ($columns as $column) {
                 $getter = sprintf('getX%s', $column);
@@ -158,8 +158,6 @@ class GamePlayService implements GamePlayServiceInterface
                     $freeIndexes[] = [$row, $column, 'O'];
                 }
             }
-
-            $row++;
         }
 
         return $freeIndexes;
