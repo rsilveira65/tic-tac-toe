@@ -2,30 +2,27 @@
 
 namespace Tests\ApiBundle\Controller;
 
-use Symfony\Component\Routing;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
-class DefaultControllerTest extends \PHPUnit_Framework_TestCase
+class DefaultControllerTest extends WebTestCase
 {
-    /** @var  \GuzzleHttp\Client $client */
+    /** @var Client */
     private $client;
 
     public function setUp()
     {
-        $this->client = new \GuzzleHttp\Client(['base_uri' => 'http://nginx/']);
-    }
-
-    public function tearDown()
-    {
-        $this->client = null;
+        $this->client = static::createClient();
     }
 
     public function testNewGame()
     {
-        $response = $this->client->post('/api/game/new');
+        $this->client->request('POST', '/api/game/new');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $data = json_decode($response->getBody(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertArrayHasKey('gameId', $data);
         $this->assertArrayHasKey('board', $data);
@@ -40,7 +37,8 @@ class DefaultControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testPlayGame()
     {
-        $response = $this->client->post(
+        $response = $this->client->request(
+            'POST',
             sprintf(
                 '/api/game/%s/play', 1
             ),
@@ -52,9 +50,9 @@ class DefaultControllerTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
-        $data = json_decode($response->getBody(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertArrayHasKey('gameId', $data);
         $this->assertArrayHasKey('board', $data);
