@@ -37,17 +37,18 @@ class DefaultControllerTest extends WebTestCase
 
     public function testPlayGame()
     {
-        $response = $this->client->request(
+        $this->client->request(
             'POST',
             sprintf(
                 '/api/game/%s/play', 1
             ),
-            [
-                'json' => [
-                    'gameId' => 1,
-                    'move'   => [0, 2, 'X']
-                ]
-            ]
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            json_encode([
+                'gameId' => 1,
+                'move'   => [0, 2, 'X']
+            ])
         );
 
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
