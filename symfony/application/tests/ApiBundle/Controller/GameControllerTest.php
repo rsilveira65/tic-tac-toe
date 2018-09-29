@@ -42,9 +42,9 @@ class DefaultControllerTest extends WebTestCase
             sprintf(
                 '/api/game/%s/play', 1
             ),
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 'gameId' => 1,
                 'move'   => [0, 2, 'X']
